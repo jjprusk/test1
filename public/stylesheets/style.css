@@ -1,0 +1,104 @@
+body {
+	padding: 0;
+	margin: 0;
+  	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+header, footer {
+	background-color: #ccc;
+}
+header div#header {
+	padding: .5em 1em;
+}
+header p {
+	margin: 0;
+	padding: 4% 0;
+}
+header div.header-left, header div.header-right {
+	display: inline-block;
+}
+header div.header-left {
+	width: 30%;
+}
+header div.header-left img {
+	width: 100%;
+}
+header div.header-right {
+	width: 70%;
+	text-align: right;
+	vertical-align: top;
+}
+footer div.footer-left, footer div.footer-right {
+	width: 48%;
+	display: inline-block;
+	padding: 0 1%;
+}
+nav {
+	text-align: center;
+}
+nav ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+nav ul li {
+	display: inline-block;
+	padding: 0 5%;
+}
+a {
+  color: #00B7FF;
+}
+section#main {
+	padding: 0 .5em;
+}
+/*********************************************************
+ * Styling for answers.
+ *********************************************************/
+form#selectAnswer div.answer-block {
+	margin-left: .5em;
+}
+form#selectAnswer div.answer {
+	display: block;
+	margin-top: .5em;
+}
+form#selectAnswer div.answer-failure {
+	background-color: #ff6600;
+}
+form#selectAnswer div.answer-success {
+	background-color: #66ff00;
+}
+div.answer input {
+	margin-right: .75em;
+}
+/*********************************************************
+ * Styling for admin view.
+ *********************************************************/
+ section#main table#admin-attempts {
+ 	border-collapse: collapse;
+ 	border: solid 1px black;
+}
+section#main table#admin-attempts td {
+  	border: solid 1px black;
+}
+section#main tr.answer-true {
+  	background-color: #66ff00;
+}
+section#main tr.answer-false {
+  	background-color: #ff6600;
+}
+/*********************************************************
+ * Styling for mobile view.
+ *********************************************************/
+@media only screen
+	and (max-width: 400px) {
+header div.header-left, header div.header-right {
+	width: 100%;
+}
+footer div.footer-left, footer div.footer-right {
+	width: 100%;
+	text-align: center;
+}
+header div.header-right {
+	text-align: center;
+}
+

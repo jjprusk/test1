@@ -1,0 +1,22 @@
+extends layout
+
+block content
+	section#main
+		h1= title
+		form#selectAnswer(name="response", method="post")
+			p.category Category: #{question.Category}
+			p.question #{question.Question}
+			div.answer-block
+				for text, i in question.Answers
+					if order[i] == answer
+						div.answer.answer-failure
+							input(id='answer#{order[i]}', type="radio", name="answer", value='#{order[i]}' checked)
+							| #{question.Answers[order[i]]}
+					else
+						div.answer
+							input(id='answer#{order[i]}', type="radio", name="answer", value='#{order[i]}')
+							| #{question.Answers[order[i]]}
+			p Incorrect answer. Please try again.
+			input(type='hidden', name='number', value='#{number}')
+			input(type='hidden', name='order', value='#{order}')
+			input(type="submit", value="Submit")

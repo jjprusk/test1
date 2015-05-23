@@ -1,0 +1,19 @@
+extends layout
+
+block content
+	section#main
+		p The Last #{attempts.length} question attempts are shown in the table below.<br>(green=correct, red=incorrect)
+		table#admin-attempts
+			thead
+				tr
+					td Date/Time
+					td Username
+					td Question
+					td Answer
+				tbody
+					for attempt, i in attempts
+						tr(class="answer-#{questions[i].success}")
+							td #{moment(attempt.timeStamp).format("MM/DD HH:mm")}
+							td #{attempt.userName}
+							td #{questions[i].question}
+							td(class="answer-#{questions[i].success}") #{questions[i].answer}
