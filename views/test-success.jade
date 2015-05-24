@@ -3,20 +3,22 @@ extends layout
 block content
 	section#main
 		h1= title
-		form#selectAnswer(name="response", method="get")
-			p.category Category: #{question.Category}
-			p.question #{question.Question}
-			div.answer-block
-				for text, i in question.Answers
-					if order[i] == 0
-						div.answer.answer-success
-							input(id='answer#{order[i]}', type="radio", name="answer", value='#{order[i]}' checked disabled)
-							| #{question.Answers[order[i]]}
-					else
-						div.answer
-							input(id='answer#{order[i]}', type="radio", name="answer", value='#{order[i]}' disabled)
-							| #{question.Answers[order[i]]}
-			p Correct answer. Press the next button to continue.
-			input(type='hidden', name='number', value='#{number}')
-			input(type='hidden', name='order', value='#{order}')
-			input(type="submit", value="Next")
+		div.test
+			div
+				form#selectAnswer(name="response", method="get")
+					h2.category Category: #{question.Category}
+					p.question #{question.Question}
+					div.answer-block
+						for text, i in question.Answers
+							if order[i] == 0
+								div.answer.answer-success
+									input(id='answer#{order[i]}', type="radio", name="answer", value='#{order[i]}' checked disabled)
+									| #{question.Answers[order[i]]}
+							else
+								div.answer
+									input(id='answer#{order[i]}', type="radio", name="answer", value='#{order[i]}' disabled)
+									| #{question.Answers[order[i]]}
+					p Correct answer. Press the next button to continue.
+					input(type='hidden', name='number', value='#{number}')
+					input(type='hidden', name='order', value='#{order}')
+					input(type="submit", value="Next")

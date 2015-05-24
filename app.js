@@ -10,7 +10,7 @@ var	sprintf = require("sprintf-js").sprintf;
 //
 // Database code
 //
-var url = "<url here>";
+var url = "mongodb://jjprusk:xx1000xx@ds031792.mongolab.com:31792/practice-tests";
 var MongoClient = require('mongodb').MongoClient;
 var routes = require('./routes/index');
 var users = require('./routes/users');

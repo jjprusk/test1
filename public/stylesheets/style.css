@@ -3,7 +3,20 @@ body {
 	margin: 0;
   	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
-
+h1 {
+	font-size: 2em;
+	margin: 0;
+}
+h2 {
+	font-size: 1.5em;
+}
+hr {
+	margin: 0;
+}
+ul li {
+	margin: .5em 0;
+}
+	
 header, footer {
 	background-color: #ccc;
 }
@@ -35,6 +48,9 @@ footer div.footer-left, footer div.footer-right {
 }
 nav {
 	text-align: center;
+	background-color: #ccc;
+	padding-bottom: .5em;
+	border-bottom: solid 1px yellow;
 }
 nav ul {
 	list-style: none;
@@ -44,12 +60,46 @@ nav ul {
 nav ul li {
 	display: inline-block;
 	padding: 0 5%;
+	margin: 0;
+}
+nav ul li a {
+	color: yellow;
+	text-decoration: none;
 }
 a {
   color: #00B7FF;
 }
 section#main {
-	padding: 0 .5em;
+	padding: .25em .5em;
+}
+section#main p:last-child {
+	margin-bottom: 0;
+}
+input[type=submit] {
+	text-shadow: 0 1px 1px #fff;
+	cursor: pointer;
+	padding: 5px 15px;
+	background: #fc0; 
+	border: 0 none;
+	-webkit-border-radius: 5px;
+	border-color: #ddd #bbb #999;
+	border-radius: 5px;
+	border-style: solid;
+	background-image: none;
+	background: rgba(0, 0, 0, 0) -moz-linear-gradient(center top , #fc0 0px, yellow 100%) repeat scroll 0 0;
+}
+input[type=submit]:hover {
+	background-image: radial-gradient(circle farthest-side at center center, #fff 21%, #fc0 100%);
+}
+input[type=submit]:active {
+	box-shadow: 0 2px 2px #888 inset;
+}
+section#main div.home-page {
+}
+section#main{
+	background-image: url('../images/road.jpg');
+	background-repeat: no-repeat;
+	background-size: cover;
 }
 /*********************************************************
  * Styling for answers.
@@ -85,6 +135,14 @@ section#main tr.answer-true {
 }
 section#main tr.answer-false {
   	background-color: #ff6600;
+}
+section#main div.test {
+	background-image: url('../images/notebook.png');
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+section#main div.test > div {
+	padding: .25em 1em;
 }
 /*********************************************************
  * Styling for mobile view.
