@@ -21,14 +21,9 @@ var about = require('./routes/about');
 var admin = require('./routes/admin');
 
 var app = express();
-
 /*
  * Open the database and cache-in the questions.
  */
- //
- // open database, convert later.
- // 2 functions
- //
 questions = new Array();
 systemStart = new Date();
 getQuestions(questions);
@@ -37,8 +32,7 @@ getQuestions(questions);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(favicon(path.join(__dirname, '/public/favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -49,6 +43,7 @@ app.use('/users', users);
 app.use('/test', test);
 app.use('/about', about);
 app.use('/admin', admin);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
