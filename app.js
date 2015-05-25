@@ -7,10 +7,12 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var	sprintf = require("sprintf-js").sprintf;
+var dbUrl = require('../dbUrl.js');
 //
-// Database code
+// Database code. Note for security purposes the url is maintained
+// in a file in the parent directory.
 //
-var url = "mongodb://jjprusk:xx1000xx@ds031792.mongolab.com:31792/practice-tests";
+var url = dbUrl.dbUrl();
 var MongoClient = require('mongodb').MongoClient;
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -28,6 +30,7 @@ var app = express();
  // 2 functions
  //
 questions = new Array();
+systemStart = new Date();
 getQuestions(questions);
 
 // view engine setup
@@ -85,7 +88,6 @@ module.exports = app;
 function getQuestions(questions) {
 	MongoClient.connect(url, function(err, db) {
 		assert.equal(null, err);
-		console.log("Connect succeeded");
 		global.db = db;
 		db.collection("questions").find({}).toArray(function(err, items) {
 			assert.equal(null, err);
@@ -93,7 +95,7 @@ function getQuestions(questions) {
 				questions.push(items[i]);
 			}
 			questions = items;
-			console.log("questions loaded");
+			//show();
 		});
 	});
 }

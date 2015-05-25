@@ -19,10 +19,14 @@ router.get('/', function(req, res, next) {
 				answer: questions[questionIndex].Answers[items[i].answerNumber],
 				success: items[i].success});
 		}
-		res.render('admin', {title: 'Admin', attempts: items, questions: attemptQuestions, moment: moment});
+		res.render('admin', {title: 'Admin',
+					attempts: items,
+					questions: attemptQuestions,
+					moment: moment,
+					systemStart: systemStart
+		});
 	});
 });
-
 module.exports = router;
 
 /*
