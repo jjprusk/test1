@@ -1,11 +1,12 @@
 var express = require('express');
 var router = express.Router();
 var	sprintf = require("sprintf-js").sprintf;
+var demoHelpers = require('../demoHelpers');
 
 /* GET statistics page. */
 router
 	.get('/', function(req, res, next) {
-		calcPercent();
+		global.demoApp.stats.percent = demoHelpers.calcPercent(global.demoApp.stats.nCorrect, global.demoApp.stats.nAttempts);
 		res.render('statistics', {sprintf:sprintf, stats: global.demoApp.stats});
 	})
 	.post('/', function(req, res, next) {
@@ -15,7 +16,6 @@ router
 		 if(req.body.action == 'reset') {
 		 	global.demoApp.db.collection('attempts').remove({},function(err, result) {
 				console.log('resetting stats');
-				calcPercent();
 				global.demoApp.stats.nAttempts = 0;
 				global.demoApp.stats.nCorrect = 0;
 				global.demoApp.stats.percent = 0;
@@ -24,10 +24,5 @@ router
 			});
 		};
 	});
-	
-function calcPercent() {
-	global.demoApp.stats.percent = 100 * (global.demoApp.stats.nAttempts > 0 ?
-		global.demoApp.stats.nCorrect / global.demoApp.stats.nAttempts  : 0);
-}
 
 module.exports = router;

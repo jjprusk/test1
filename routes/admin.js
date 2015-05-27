@@ -3,6 +3,7 @@ var router = express.Router();
 var assert = require('assert');
 var moment = require('moment');
 var	sprintf = require("sprintf-js").sprintf;
+var demoHelpers = require('../demoHelpers');
 
 /* GET admin page. */
 
@@ -16,14 +17,13 @@ router.get('/', function(req, res, next) {
 		}
 		var attemptQuestions = new Array();
 		for(var i = 0; i < items.length; i++) {
-			var questionIndex = findQuestion(items[i].questionId);
+			var questionIndex = demoHelpers.findQuestion(items[i].questionId);
 			attemptQuestions.push({
 				question: global.demoApp.questions[questionIndex].Question,
 				answer: global.demoApp.questions[questionIndex].Answers[items[i].answerNumber],
 				success: items[i].success});
 		}
-		global.demoApp.stats.percent = 100 * (global.demoApp.stats.nAttempts > 0 ?
-			global.demoApp.stats.nCorrect / global.demoApp.stats.nAttempts  : 0);	
+		global.demoApp.stats.percent = demoHelpers.calcPercent(global.demoApp.stats.nCorrect, global.demoApp.stats.nAttempts);	
 		res.render('admin', {title: 'Admin',
 					sprintf : sprintf,
 					attempts: items,
@@ -34,17 +34,5 @@ router.get('/', function(req, res, next) {
 		});
 	});
 });
-module.exports = router;
 
-/*
- * Return the index into the question array based on the object ID.
- */
-function findQuestion(questionId) {
-	for(var i = 0; i < global.demoApp.questions.length; i++) {
-		if(global.demoApp.questions[i]._id.id === questionId) {
-			return i;
-		}
-	}
-	console.log("cannot find question ID");
-	return null;
-}
+module.exports = router;

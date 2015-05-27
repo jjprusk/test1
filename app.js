@@ -1,3 +1,4 @@
+var VERSION = 'V0.5';
 var assert = require('assert');
 var express = require('express');
 var bodyParser = require("body-parser");
@@ -27,17 +28,18 @@ var app = express();
  */
 demoApp = {
 	stats : {
-		nAttempts: 1, // just to make sure no divide by zero...
+		nAttempts: 0,
 		nCorrect: 0,
 		percent: 0},
 	db: {},
 	systemStart : new Date(),
+	version: VERSION,
 	questions: new Array()
-}	
-//questions = new Array();
-
+}
+/*
+ * Cache-in the question database for quick access.
+ */
 getQuestions(global.demoApp.questions);
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -102,13 +104,11 @@ function getQuestions(questions) {
 				global.demoApp.questions.push(items[i]);
 			}
 			global.demoApp.questions = items;
-			//show();
 		});
 		global.demoApp.db.collection('attempts').find({}).count(function(err, count) {
 			if(err != null) {
 				console.log('cannot get nAttempts: ' + err);
 			} else {
-				console.log('count  = ' + count);
 				global.demoApp.stats.nAttempts = count;
 			}
 		});
@@ -116,21 +116,8 @@ function getQuestions(questions) {
 			if(err != null) {
 				console.log('cannot get nCorrect: ' + err);
 			} else {
-				console.log('nCorrect  = ' + nCorrect);
 				global.demoApp.stats.nCorrect = nCorrect;
 			}
 		});
 	});
-}
-
-function show() {
-	console.log(questions.length);
-	for(var i=0; i < questions.length; i++) {
-			console.log(sprintf("C: %s", questions[i].Category));
-			console.log(sprintf("Q[%i]: %s", i, questions[i].Question));
-			for(var j = 0; j < questions[i].Answers.length; j++) {
-				console.log(sprintf('A[%i]: %s', j, questions[i].Answers[j]))
-			}
-			console.log('----------------');
-		};
 }
