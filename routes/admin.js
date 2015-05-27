@@ -29,6 +29,7 @@ router.get('/', function(req, res, next) {
 					attempts: items,
 					stats: global.demoApp.stats,
 					questions: attemptQuestions,
+					version: global.demoApp.version,
 					moment: moment,
 					systemStart: global.demoApp.systemStart
 		});

@@ -3,7 +3,7 @@ extends layout
 block content
 	section#main
 		h1=title
-		p System start: #{moment(systemStart).format("MM/DD HH:mm:ss")}
+		p System [#{version}] start: #{moment(systemStart).format("MM/DD HH:mm:ss")}
 		include statistics
 		p
 			span.reset-link Restart test
