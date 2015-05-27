@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var	sprintf = require("sprintf-js").sprintf;
+					
 
 /*
  * GET / POST the test page.
@@ -8,13 +9,16 @@ var	sprintf = require("sprintf-js").sprintf;
 router
 	.get('/', function(req, res, next) {
 	var order = shuffle([0,1,2,3]);
-	var questionNumber = randomInt(0,questions.length-1);
+	var questionNumber = randomInt(0, global.demoApp.questions.length-1);
 	res.render('test', {title: "Practice questions",
-						question: questions[questionNumber],
+						question: global.demoApp.questions[questionNumber],
 						order: shuffle([0,1,2,3]),
+						stats: global.demoApp.stats,
+						sprintf: sprintf,
 						number: questionNumber});
 })
 	.post('/', function(req, res, next) {
+		global.demoApp.stats.nAttempts++;
 		/*
 		 * Test for success and render appropriate page. Note that the display order is 
 		 * stored as a hidden value on the form.
@@ -23,26 +27,35 @@ router
 		if(parseInt(req.body.answer) === 0) {
 			writeAttempt(
 				"Anonymous",
-				questions[req.body.number]._id.id,
+				global.demoApp.questions[req.body.number]._id.id,
 				parseInt(req.body.answer),
 				true);
+			global.demoApp.stats.nCorrect++;
+			global.demoApp.stats.percent = 100 * (global.demoApp.stats.nAttempts > 0 ?
+				global.demoApp.stats.nCorrect / global.demoApp.stats.nAttempts  : 0);
 			res.render('test-success', {
 				title: "Practice questions",
-				question: questions[parseInt(req.body.number)],
+				question: global.demoApp.questions[parseInt(req.body.number)],
 				answer: parseInt(req.body.answer),
 				order: newOrder,
+				stats: global.demoApp.stats,
+				sprintf: sprintf,
 				number: parseInt(req.body.number)});
 		} else {
 			writeAttempt(
 				"Anonymous",
-				questions[req.body.number]._id.id,
+				global.demoApp.questions[req.body.number]._id.id,
 				parseInt(req.body.answer),
 				false);
+				global.demoApp.stats.percent = 100 * (global.demoApp.stats.nAttempts > 0 ?
+					global.demoApp.stats.nCorrect / global.demoApp.stats.nAttempts  : 0);
 			res.render('test-failure', {
 				title: "Practice questions",
-				question: questions[parseInt(req.body.number)],
+				question: global.demoApp.questions[parseInt(req.body.number)],
 				answer: parseInt(req.body.answer),
 				order: newOrder,
+				stats: global.demoApp.stats,
+				sprintf: sprintf,
 				number: parseInt(req.body.number)});
 		}
 });
@@ -50,12 +63,12 @@ router
 module.exports = router;
 
 function show() {
-	console.log(questions.length);
+	console.log(global.demoApp.questions.length);
 	for(var i=0; i < questions.length; i++) {
-			console.log(sprintf("C: %s", questions[i].Category));
-			console.log(sprintf("Q[%i]: %s", i, questions[i].Question));
-			for(var j = 0; j < questions[i].Answers.length; j++) {
-				console.log(sprintf('A[%i]: %s', j, questions[i].Answers[j]))
+			console.log(sprintf("C: %s", global.demoApp.questions[i].Category));
+			console.log(sprintf("Q[%i]: %s", i, global.demoApp.questions[i].Question));
+			for(var j = 0; j < global.demoApp.questions[i].Answers.length; j++) {
+				console.log(sprintf('A[%i]: %s', j, global.demoApp.questions[i].Answers[j]))
 			}
 			console.log('----------------');
 		};
@@ -70,11 +83,10 @@ function shuffle(o){
 }
 
 function writeAttempt(name, questionId, answer, success) {
-	var res = db.collection('attempts').insert({
+	var res = global.demoApp.db.collection('attempts').insert({
 		timeStamp: new Date(),
 		userName: name,
 		questionId: questionId,
 		answerNumber: answer,
 		success: success});
-	console.log("result = " + res); 
 }

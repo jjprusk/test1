@@ -102,10 +102,14 @@ input[type=submit]:active {
 }
 section#main div.home-page {
 }
-section#main{
+section#main {
 	background-image: url('../images/road.jpg');
 	background-repeat: no-repeat;
 	background-size: cover;
+}
+section#main div.test > p {
+	padding-left: 1em;
+	margin: .5em 0;
 }
 /*********************************************************
  * Styling for answers.
@@ -149,6 +153,13 @@ section#main div.test {
 }
 section#main div.test > div {
 	padding: .25em 1em;
+}
+section#main span.reset-link {
+	color: blue;
+	text-decoration: underline;
+}
+section#main span.reset-link:hover {
+	cursor: pointer;
 }
 /*********************************************************
  * Styling for mobile view.

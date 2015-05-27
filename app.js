@@ -19,14 +19,24 @@ var users = require('./routes/users');
 var test = require('./routes/test');
 var about = require('./routes/about');
 var admin = require('./routes/admin');
+var statistics = require('./routes/statistics');
 
 var app = express();
 /*
- * Open the database and cache-in the questions.
+ * Global object used to store application-specific information.
  */
-questions = new Array();
-systemStart = new Date();
-getQuestions(questions);
+demoApp = {
+	stats : {
+		nAttempts: 1, // just to make sure no divide by zero...
+		nCorrect: 0,
+		percent: 0},
+	db: {},
+	systemStart : new Date(),
+	questions: new Array()
+}	
+//questions = new Array();
+
+getQuestions(global.demoApp.questions);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -43,6 +53,7 @@ app.use('/users', users);
 app.use('/test', test);
 app.use('/about', about);
 app.use('/admin', admin);
+app.use('/statistics', statistics);
 
 
 // catch 404 and forward to error handler
@@ -83,14 +94,31 @@ module.exports = app;
 function getQuestions(questions) {
 	MongoClient.connect(url, function(err, db) {
 		assert.equal(null, err);
-		global.db = db;
-		db.collection("questions").find({}).toArray(function(err, items) {
+		console.log('connected to database');
+		global.demoApp.db = db;
+		global.demoApp.db.collection("questions").find({}).toArray(function(err, items) {
 			assert.equal(null, err);
 			for(var i = 0; i < items.length; i++) {
-				questions.push(items[i]);
+				global.demoApp.questions.push(items[i]);
 			}
-			questions = items;
+			global.demoApp.questions = items;
 			//show();
+		});
+		global.demoApp.db.collection('attempts').find({}).count(function(err, count) {
+			if(err != null) {
+				console.log('cannot get nAttempts: ' + err);
+			} else {
+				console.log('count  = ' + count);
+				global.demoApp.stats.nAttempts = count;
+			}
+		});
+		global.demoApp.db.collection('attempts').find({success:true}).count(function(err, nCorrect) {
+			if(err != null) {
+				console.log('cannot get nCorrect: ' + err);
+			} else {
+				console.log('nCorrect  = ' + nCorrect);
+				global.demoApp.stats.nCorrect = nCorrect;
+			}
 		});
 	});
 }

@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var assert = require('assert');
 var moment = require('moment');
+var	sprintf = require("sprintf-js").sprintf;
 
 /* GET admin page. */
 
@@ -9,21 +10,27 @@ router.get('/', function(req, res, next) {
 	/*
 	 * Get the attempts records from the database and display them.
 	 */
-	db.collection('attempts').find({}).sort({timeStamp:-1}).limit(20).toArray(function(err, items) {
-		assert.equal(null, err);
+	global.demoApp.db.collection('attempts').find({}).sort({timeStamp:-1}).limit(20).toArray(function(err, items) {
+		if(err != null) {
+			console.log('Error getting attempt records: ' + err);
+		}
 		var attemptQuestions = new Array();
 		for(var i = 0; i < items.length; i++) {
 			var questionIndex = findQuestion(items[i].questionId);
 			attemptQuestions.push({
-				question: questions[questionIndex].Question,
-				answer: questions[questionIndex].Answers[items[i].answerNumber],
+				question: global.demoApp.questions[questionIndex].Question,
+				answer: global.demoApp.questions[questionIndex].Answers[items[i].answerNumber],
 				success: items[i].success});
 		}
+		global.demoApp.stats.percent = 100 * (global.demoApp.stats.nAttempts > 0 ?
+			global.demoApp.stats.nCorrect / global.demoApp.stats.nAttempts  : 0);	
 		res.render('admin', {title: 'Admin',
+					sprintf : sprintf,
 					attempts: items,
+					stats: global.demoApp.stats,
 					questions: attemptQuestions,
 					moment: moment,
-					systemStart: systemStart
+					systemStart: global.demoApp.systemStart
 		});
 	});
 });
@@ -33,8 +40,8 @@ module.exports = router;
  * Return the index into the question array based on the object ID.
  */
 function findQuestion(questionId) {
-	for(var i = 0; i < questions.length; i++) {
-		if(questions[i]._id.id === questionId) {
+	for(var i = 0; i < global.demoApp.questions.length; i++) {
+		if(global.demoApp.questions[i]._id.id === questionId) {
 			return i;
 		}
 	}

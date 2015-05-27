@@ -3,7 +3,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-	res.render('index', { title: 'Practice Tests', nQuestions: questions.length });
+	res.render('index', { title: 'Practice Tests', nQuestions: global.demoApp.questions.length });
 });
 
 module.exports = router;

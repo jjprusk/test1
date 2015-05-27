@@ -4,6 +4,9 @@ block content
 	section#main
 		h1= title
 		div.test
+			include statistics
+			p
+				span.reset-link Restart test
 			div
 				form#selectAnswer(name="response", method="post")
 					h2.category Category: #{question.Category}

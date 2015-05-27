@@ -4,18 +4,24 @@ block content
 	section#main
 		h1=title
 		p System start: #{moment(systemStart).format("MM/DD HH:mm:ss")}
-		p The Last #{attempts.length} question attempts are shown in the table below.<br>(green=correct, red=incorrect)
-		table#admin-attempts
-			thead
-				tr
-					td Date/Time
-					td Username
-					td Question
-					td Answer
-			tbody
-				for attempt, i in attempts
-					tr(class="answer-#{questions[i].success}")
-						td #{moment(attempt.timeStamp).format("MM/DD HH:mm")}
-						td #{attempt.userName}
-						td #{questions[i].question}
-						td(class="answer-#{questions[i].success}") #{questions[i].answer}
+		include statistics
+		p
+			span.reset-link Restart test
+		if stats.nAttempts == 0
+			p There are no attempts recorded.
+		else
+			p The last #{attempts.length} question attempts are shown in the table below.<br>(green=correct, red=incorrect)
+			table#admin-attempts
+				thead
+					tr
+						td Date/Time
+						td Username
+						td Question
+						td Answer
+				tbody
+					for attempt, i in attempts
+						tr(class="answer-#{questions[i].success}")
+							td #{moment(attempt.timeStamp).format("MM/DD HH:mm")}
+							td #{attempt.userName}
+							td #{questions[i].question}
+							td(class="answer-#{questions[i].success}") #{questions[i].answer}

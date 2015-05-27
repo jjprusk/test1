@@ -4,8 +4,12 @@ block content
 	section#main
 		h1= title
 		div.test
+			include statistics
+			p
+				span.reset-link Restart test
 			div
 				form#selectAnswer(name="response", method="post")
+					//include statistics
 					h2.category Category: #{question.Category}
 					p.question #{question.Question}
 					div.answer-block
