@@ -16,7 +16,12 @@ $( document ).ready(function() {
 	 * Make sure user has made a selection
 	 */
 	$('form#selectAnswer').submit(function() {
-		return $("input:radio[name='answer']").is(':checked');
+		if($("input:radio[name='answer']").is(':checked')) {
+			return true;
+		} else {
+			alert('Please select an answer before submitting');
+			return false;
+		}
 	});
 });
 
