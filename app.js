@@ -1,4 +1,4 @@
-var VERSION = 'V0.7';
+var VERSION = 'V1.00';
 var assert = require('assert');
 var express = require('express');
 var bodyParser = require("body-parser");
