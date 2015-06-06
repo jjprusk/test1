@@ -35,3 +35,5 @@ Notes:
 3) High scalability can be obtained by running multiple occurences of the server, which will all log attempts to the same database.
 
 4) Note that for this demo application, there is only a single user. The obvious next step to move the demo to a true application would be to create a user management system.
+
+5) The file "questions.json" contains the questions in JSON format that were imported into the mongodb database. This file is not used post the import, but remains here as an example of an importable JSON file.
