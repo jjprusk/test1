@@ -1,8 +1,8 @@
 Running NodeJS
 
-Node is a server that receives and responds to http requests in a manner similar to Apache. Express is the most popular scaffolding used to build web sites. Another key application, NPM (Node Package Manager) provides the ability to install and manager a wide variety of add-on modules available via the node community.
+Node is a server that receives and responds to http requests in a manner similar to Apache. Express is the most popular scaffolding used to build web sites. Another key application, NPM (Node Package Manager), provides the ability to install and manage a wide variety of add-on modules available via the node community.
 
-NodeJS runs on Linux, various *NIX implementations, Mac OSX, and Windows. The file, package.json, which resides in the root directory of a project, defines the packages that are needed for the application server to execute. NPM manages this file and can be used as part of installing an application.
+NodeJS runs on Linux, various *NIX implementations, Mac OSX, and Windows. The file package.json, which resides in the root directory of a project, defines the packages that are needed for the application server to execute. NPM manages this file and can be used as part of installing an application.
 
 NodeJS Installation
 
@@ -18,7 +18,7 @@ The fourth step is to install the add-on modules required by the application. Op
 
 The database
 
-There is a MongoDB database with 2 collections: "questions" and "attempts". The database is hosted on AWS separately from the NodeJS application and is managed with the mongolab site (http://mongolab.com). The credentials for accessing the database are stored in a file named dbUrl.js. Note that this file is stored in the root folder for ease of use, but in a production server would typically be stored in a folder one level up for security reasons.
+There is a MongoDB database with 2 collections: "questions" and "attempts". The database is hosted on AWS separately from the NodeJS application and is managed with the mongolab site (http://mongolab.com). The credentials for accessing the database are stored in a file named dbUrl.js. Note that this file is stored in the root folder for ease of use, but in a production server the credentials file would typically be stored in a folder one level up for security reasons.
 
 The "questions" collection contains a set of driving test questions, each of which has 4 possible answers. The first answer is always the correct answer, but they are randomly shown to the user. The "answers" collection is a log of all attempts by the user to answer a question. The list of the last 20 attempts can be seen in the "admin" page of the demo application. At any time, a running grade is shown and the test can be reset, which deletes all previous attempts.
 
@@ -28,8 +28,10 @@ The server is setup to run on port 3000 by default, which is set in the startup 
 
 Notes:
 
-1) The demo app running on Amazon AWS (http://52.25.57.79:3000).
+1) The demo app is running on Amazon AWS (http://52.25.57.79:3000).
 
-2) Running this app on other systems will utilize the same database. The result is the same questions and a single collection of attempt records. The result is that attempts from all servers will be comingled in the database. In normal production mode, a new database would be created for each server instance.
+2) Running this app on other systems will utilize the same database. The result is the same questions and a single collection of attempt records. The result is that attempts from all servers will be collected in the database.
 
-3) Note that for this demo application, there is only a single user. The obvious next step to move the demo to a true application would be to create a user management system.
+3) High scalability can be obtained by running multiple occurences of the server, which will all log attempts to the same database.
+
+4) Note that for this demo application, there is only a single user. The obvious next step to move the demo to a true application would be to create a user management system.
