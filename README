@@ -1,0 +1,29 @@
+Running NodeJS
+
+Node is a server that receives and responds to http requests in a manner similar to Apache. Express is the most popular scaffolding used to build web sites. Another key application, NPM (Node Package Manager) provides the ability to install and manager a wide variety of add-on modules available via the node community.
+
+NodeJS runs on Linux, various *NIX implementations, Mac OSX, and Windows. The file, package.json, which resides in the root directory of a project, defines the packages that are needed for the application server to execute. NPM manages this file and can be used as part of installing an application.
+
+NodeJS Installation
+
+The first step is to install NodeJS and NPM. There are a variety of installers available for the most popular operating systems. These can be found at https://nodejs.org/download/. Downloading and executing the appropriate installer will setup NodeJS and NPM.
+
+Unpacking the demo application project
+
+The second step is to unzip the demo application folder. The demo application is packaged in a folder named "test1" which can be unzipped into any folder of choice (Desktop, etc.). All of the source code files are included but the modules, which are easily downloaded with NPM, are not distributed as part of the application.
+
+Installing the add-on modules
+
+The fourth step is to install the add-on modules required by the application. Open a command line window, change default directory to the folder that was created in step 2, and type in "npm install". This will install all of the add-on modules with the appropriate version numbers. These modules are defined in the package.json file and installed into the "node_modules" subdirectory.
+
+The database
+
+There is a MongoDB database with 2 collections: "questions" and "attempts". The database is hosted on AWS separately from the NodeJS application and is managed with the mongolab site (http://mongolab.com). The credentials for accessing the database are stored in a file named dbUrl.js. Note that this file is stored in the root folder for ease of use, but in a production server would typically be stored in a folder one level up for security reasons.
+
+The "questions" collection contains a set of driving test questions, each of which has 4 possible answers. The first answer is always the correct answer, but they are randomly shown to the user. The "answers" collection is a log of all attempts by the user to answer a question. The list of the last 20 attempts can be seen in the "admin" page of the demo application. At any time, a running grade is shown and the test can be reset, which deletes all previous attempts.
+
+Running the application server
+
+The server is setup to run on port 3000 by default, which is set in the startup file "./bin/www". After everything is unpacked and the modules are installed, the server can be executed from the command line. To execute, change directory to the application root directory and enter the command "node ./bin/www". The server will open the database, cache-in the questions, and then wait for requests. All requests are logged to STDOUT in the Common Log Format allowing for analysis with a variety of tools, such as AWStats.
+
+Note that for this demo application, there is only a single user. The obvious next step to move the demo to a true application would be to create a user management system.
