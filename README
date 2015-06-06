@@ -26,4 +26,10 @@ Running the application server
 
 The server is setup to run on port 3000 by default, which is set in the startup file "./bin/www". After everything is unpacked and the modules are installed, the server can be executed from the command line. To execute, change directory to the application root directory and enter the command "node ./bin/www". The server will open the database, cache-in the questions, and then wait for requests. All requests are logged to STDOUT in the Common Log Format allowing for analysis with a variety of tools, such as AWStats.
 
-Note that for this demo application, there is only a single user. The obvious next step to move the demo to a true application would be to create a user management system.
+Notes:
+
+1) The demo app running on Amazon AWS (http://52.25.57.79:3000).
+
+2) Running this app on other systems will utilize the same database. The result is the same questions and a single collection of attempt records. The result is that attempts from all servers will be comingled in the database. In normal production mode, a new database would be created for each server instance.
+
+3) Note that for this demo application, there is only a single user. The obvious next step to move the demo to a true application would be to create a user management system.

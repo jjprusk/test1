@@ -8,7 +8,9 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var	sprintf = require("sprintf-js").sprintf;
-var dbUrl = require('../dbUrl.js');
+//var dbUrl = require('../dbUrl.js'); //normally used
+var dbUrl = require('./dbUrl.js'); //used for distribution purposes
+
 //
 // Database code. Note for security purposes the url is maintained
 // in a file in the parent directory.
